@@ -87,12 +87,17 @@ int move(m_t MT, char *ucode) {
 void print_temp_s(m_t MT, char *ucode) {
     int i = 0;
     while (*(ucode + i)) {
-        if (i == MT -> position) {
-            printf("q%d", MT -> state);
-        } else
-            printf("%c", ucode[i]);
+        if (i == MT -> position) 
+            printf(" q%d ", MT -> state);
+
+        printf("%c", ucode[i]);
         i++;
     }
+    // pozycja 5 dlugosc 4 wydrukuje sie np BBBB i nie 
+    // bedzie stanu
+    if (MT -> position >= (int)strlen(ucode))
+        printf(" q%d ", MT -> state);
+
     printf("\n");
 }
 
@@ -119,6 +124,7 @@ int main(void) {
         return -2;
     }
 
+    print_temp_s(MT, unary_code);
     while ((exit_code = move(MT, unary_code)) != 0) {
         print_temp_s(MT, unary_code);
         if (exit_code == -1) {
@@ -126,6 +132,7 @@ int main(void) {
             return -1;
         }
     }
+    print_temp_s(MT, unary_code);
 
     return 0;
 }
