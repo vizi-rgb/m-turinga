@@ -85,6 +85,35 @@ int move(m_t MT, char *ucode) {
 }
 
 void print_temp_s(m_t MT, char *ucode) {
+    int start, end;
+    // 000100; mt -> pos = 3
+    // 000 q3 100
+    // BB010B
+    for (start = 0; start < MT -> position; start++) {
+        if (ucode[start] != 'B')
+            break;
+    }
+
+    for (end = strlen(ucode) - 1; end >= MT -> position; end--) {
+        if (ucode[end] != 'B')
+            break;
+    }
+
+    for (int i = start; i <= end; i++) {
+        if (i == MT -> position) {
+            printf(" q%d ", MT -> state);
+        }
+        printf("%c", ucode[i]);
+    }
+
+    if (end < MT -> position)
+        printf(" q%d", MT -> state);
+    
+    printf("\n");
+}
+
+#ifdef FULL
+void print_temp_full_s(m_t MT, char *ucode) {
     int i = 0;
     while (*(ucode + i)) {
         if (i == MT -> position) 
@@ -100,6 +129,7 @@ void print_temp_s(m_t MT, char *ucode) {
 
     printf("\n");
 }
+#endif
 
 
 int main(void) {
@@ -124,6 +154,7 @@ int main(void) {
         return -2;
     }
 
+
     print_temp_s(MT, unary_code);
     while ((exit_code = move(MT, unary_code)) != 0) {
         print_temp_s(MT, unary_code);
@@ -133,6 +164,18 @@ int main(void) {
         }
     }
     print_temp_s(MT, unary_code);
+
+    #ifdef FULL
+    print_temp_full_s(MT, unary_code);
+    while ((exit_code = move(MT, unary_code)) != 0) {
+        print_temp_full_s(MT, unary_code);
+        if (exit_code == -1) {
+            printf("blad\n");
+            return -1;
+        }
+    }
+    print_temp_full_s(MT, unary_code);
+    #endif
 
     return 0;
 }
