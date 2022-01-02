@@ -53,7 +53,7 @@ char *unary(int m[2]) {
 }
 
 void initial_print() {
-    printf("\tEmulator maszyny Turina obliczajacy roznice wlasciwa: \n"
+    printf("\tEmulator maszyny Turinga obliczajacy roznice wlasciwa: \n"
            " Q: {q0, q1, q2, q3, q4, q5, q6}\n"
            " Symbole wejsciowe: {0, 1}\n"
            " Symbole tasmowe: {0, 1, B}\n"
