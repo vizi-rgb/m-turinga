@@ -66,11 +66,13 @@ int move(m_t MT, char *ucode) {
     MT -> curr_c = ucode[MT -> position];
 
     if (MT -> curr_c != 'B' && MT -> curr_c != '\0') {
-        ucode[MT -> position] = f_c[MT -> state][MT -> curr_c - '0'];
+        if (ucode[MT -> position] != '\0')
+            ucode[MT -> position] = f_c[MT -> state][MT -> curr_c - '0'];
         MT -> position += direction[MT -> state][MT -> curr_c - '0'];
         MT -> state = fstate[MT -> state][MT -> curr_c - '0'];
     } else {
-        ucode[MT -> position] = f_c[MT -> state][2];
+        if (ucode[MT -> position] != '\0')
+            ucode[MT -> position] = f_c[MT -> state][2];
         MT -> position += direction[MT -> state][2];
         MT -> state = fstate[MT -> state][2];
     }
