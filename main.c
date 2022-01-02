@@ -41,10 +41,13 @@ char *unary(int m[2]) {
     if (m[0] < 0 || m[1] < 0)
         return NULL;
 
-    char *string = malloc(sizeof *string * (m[0] + m[1] + 2));
+    char *string = malloc(sizeof *string * (m[0] + m[1] + 20));
 
     for (i = 0; i < m[0] + m[1] + 1; i++) 
         string[i] = i == m[0] ? '1' : '0';
+
+    for (; i < m[0] + m[1] + 20; i++)
+        string[i] = 'B';
 
     string[i] = '\0';
     
@@ -70,7 +73,8 @@ int move(m_t MT, char *ucode) {
         MT -> position += direction[MT -> state][MT -> curr_c - '0'];
         MT -> state = fstate[MT -> state][MT -> curr_c - '0'];
     } else {
-        ucode[MT -> position] = f_c[MT -> state][2];
+        if (ucode[MT -> position] != '\0')
+            ucode[MT -> position] = f_c[MT -> state][2];
         MT -> position += direction[MT -> state][2];
         MT -> state = fstate[MT -> state][2];
     }
